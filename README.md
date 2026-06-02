@@ -1,4 +1,4 @@
-# Claude Token Saver MCP Server
+# CLI Doc2MD MCP Server
 ### Local Document Parsing Skill for Claude Desktop & CLI
 
 This is a self-contained **Model Context Protocol (MCP)** server designed to empower **Claude Desktop**, **Claude CLI**, and any MCP-compliant AI client with the native ability to read local documents and convert them into **highly squeezed, token-optimized Markdown**.
@@ -28,7 +28,7 @@ The server leverages browserless, high-performance Node.js extraction libraries 
 ### 1. Build and install dependencies locally
 Open your terminal and navigate to this folder, then run the installer:
 ```bash
-cd claude-token-saver-mcp
+cd cli-doc2md-mcp
 npm install
 ```
 
@@ -40,16 +40,16 @@ To add this token-saving skill to your **Claude Desktop** application, you need 
 #### File Locations:
 - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
-
+- 
 Open or create this file and paste the configuration block below, replacing `<absolute-path-to-repo>` with the absolute path to your `markitdown` clone:
 
 ```json
 {
   "mcpServers": {
-    "token-saver-parser": {
+    "cli-doc2md-mcp": {
       "command": "node",
       "args": [
-        "<absolute-path-to-repo>/claude-token-saver-mcp/index.js"
+        "<absolute-path-to-repo>/cli-doc2md-mcp/index.js"
       ]
     }
   }
@@ -60,10 +60,10 @@ Open or create this file and paste the configuration block below, replacing `<ab
 ```json
 {
   "mcpServers": {
-    "token-saver-parser": {
+    "cli-doc2md-mcp": {
       "command": "node",
       "args": [
-        "/Users/username/saif/markitdown/claude-token-saver-mcp/index.js"
+        "/Users/username/saif/markitdown/cli-doc2md-mcp/index.js"
       ]
     }
   }
@@ -74,10 +74,10 @@ Open or create this file and paste the configuration block below, replacing `<ab
 ```json
 {
   "mcpServers": {
-    "token-saver-parser": {
+    "cli-doc2md-mcp": {
       "command": "node",
       "args": [
-        "C:\\Users\\username\\Documents\\markitdown\\claude-token-saver-mcp\\index.js"
+        "C:\\Users\\username\\Documents\\markitdown\\cli-doc2md-mcp\\index.js"
       ]
     }
   }
@@ -85,7 +85,26 @@ Open or create this file and paste the configuration block below, replacing `<ab
 ```
 
 #### 🔄 Apply Changes:
-Save the file and **completely restart Claude Desktop** (Quit from menu bar and relaunch). You should now see a plug icon in the input panel, indicating that the `token-saver-parser` skill is active and linked!
+Save the file and **completely restart Claude Desktop** (Quit from menu bar and relaunch). You should now see a plug icon in the input panel, indicating that the `cli-doc2md-mcp` skill is active and linked!
+
+---
+
+### 3. Connect to Claude CLI & Terminal MCP Clients
+If you are using the terminal-based **Claude CLI** or wish to interactively debug your skill in the terminal, you can connect this server directly:
+
+#### Option A: Run with the MCP Inspector
+The Model Context Protocol Inspector is the official debugging CLI that provides a console interface to interact with and verify your local server:
+```bash
+# Run from inside the cli-doc2md-mcp directory
+npx -y @modelcontextprotocol/inspector node index.js
+```
+This starts the stdio server, spawns the inspector web panel, and lets you dry-run the `parse_local_file` tool call with custom parameters to see structural token saving in action!
+
+#### Option B: Bind to other CLI / Shell integrations
+Since the skill communicates over standard input/output (`stdio`), you can pipe file parsing commands or spin up CLI chat loops using client shells:
+```bash
+npx -y mcp-cli --server "node /Users/saif/saif/markitdown/cli-doc2md-mcp/index.js"
+```
 
 ---
 
@@ -120,7 +139,7 @@ If Claude does not show the plug icon or fails to read files, follow this step-b
 
 ### 1. Locate the Claude Desktop Logs
 Claude logs all JSON-RPC transactions and startup errors. If the server fails to load, the logs tell you exactly why:
-- **macOS logs path**: `~/Library/Logs/Claude/mcp.log` and `~/Library/Logs/Claude/mcp-server-token-saver-parser.log`
+- **macOS logs path**: `~/Library/Logs/Claude/mcp.log` and `~/Library/Logs/Claude/mcp-server-cli-doc2md-mcp.log`
 - **Windows logs path**: `%APPDATA%\Claude\Logs\mcp.log`
 
 ### 2. Error: "command not found: node" or Server failing to spawn
@@ -129,25 +148,25 @@ This occurs when Claude Desktop cannot locate `node` on its system path during s
   - On macOS, open terminal and run `which node` to get the path (usually `/usr/local/bin/node` or `/opt/homebrew/bin/node`).
   - Update your configuration:
     ```json
-    "token-saver-parser": {
+    "cli-doc2md-mcp": {
       "command": "/opt/homebrew/bin/node",
       "args": [
-        "/Users/username/saif/markitdown/claude-token-saver-mcp/index.js"
+        "/Users/username/saif/markitdown/cli-doc2md-mcp/index.js"
       ]
     }
     ```
 
 ### 3. Error: "Cannot find module '@modelcontextprotocol/sdk'..."
 The server was started before dependencies were installed locally.
-- **Solution**: Run `npm install` inside the `claude-token-saver-mcp/` directory.
+- **Solution**: Run `npm install` inside the `cli-doc2md-mcp/` directory.
 
 ### 4. How to perform a dry-run local diagnostic
 You can test the MCP server in your terminal. It communicates over stdio, so you can execute the script directly:
 ```bash
-node claude-token-saver-mcp/index.js
+node cli-doc2md-mcp/index.js
 ```
 The server will start and wait for standard input. It will print a log on stderr:
-`[Claude Token Saver MCP] Connected on stdio transport.`
+`[CLI Doc2MD MCP] Connected on stdio transport.`
 To exit the stdio loop, press `Ctrl + C`.
 
 ---
