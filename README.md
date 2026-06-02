@@ -179,4 +179,4 @@ To exit the stdio loop, press `Ctrl + C`.
 
 ---
 
-*Part of the MarkDownify suite. Developed with ❤️ for prompt engineering productivity.*
+*Part of the MarkDownify suite. Developed with ❤️ by SaifAlmajd ([@Syf-Almjd](https://github.com/Syf-Almjd)) for prompt engineering productivity.*

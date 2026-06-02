@@ -29,6 +29,14 @@
     "llm",
     "context-optimizer"
   ],
-  "author": "MarkDownify Community",
-  "license": "MIT"
+  "author": "SaifAlmajd (https://github.com/Syf-Almjd)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Syf-Almjd/cli-doc2md-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Syf-Almjd/cli-doc2md-mcp/issues"
+  },
+  "homepage": "https://github.com/Syf-Almjd/cli-doc2md-mcp#readme"
 }
