@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "cli-doc2md-mcp": {
+      "command": "node",
+      "args": [
+        "/Users/saif/saif/markitdown/cli-doc2md-mcp/index.js"
+      ]
+    }
+  }
+}
